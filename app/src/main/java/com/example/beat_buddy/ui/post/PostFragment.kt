@@ -22,14 +22,14 @@ class PostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val postViewModel =
-            ViewModelProvider(this).get(PostViewModel::class.java)
+        val postsListViewModel =
+            ViewModelProvider(this).get(PostsListViewModel::class.java)
 
         _binding = FragmentPostBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textPost
-        postViewModel.text.observe(viewLifecycleOwner) {
+        postsListViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
