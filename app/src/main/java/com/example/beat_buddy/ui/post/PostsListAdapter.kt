@@ -5,27 +5,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beat_buddy.databinding.ListItemPostBinding
+import java.util.UUID
 
 class PostHolder(
     val binding: ListItemPostBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(post: Post) {
+    fun bind(post: Post, onPostClicked: (postId: UUID) -> Unit) {
         binding.postsTitle.text = post.title
         binding.postsTimestamp.text = post.date.toString()
         binding.postsDescription.text = post.description
 
         binding.root.setOnClickListener {
-            Toast.makeText(
-                binding.root.context,
-                "${post.title} clicked!",
-                Toast.LENGTH_SHORT
-            ).show()
+            onPostClicked(post.id)
+
         }
     }
 }
 
-class PostsListAdapter(private val posts: List<Post>
+class PostsListAdapter(
+    private val posts: List<Post>,
+    private val onPostClicked: (postId: UUID) -> Unit
 ) : RecyclerView.Adapter<PostHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -37,6 +37,6 @@ class PostsListAdapter(private val posts: List<Post>
 
     override fun onBindViewHolder(holder: PostHolder, position: Int) {
         val post = posts[position]
-        holder.bind(post)
+        holder.bind(post, onPostClicked)
     }
 }
