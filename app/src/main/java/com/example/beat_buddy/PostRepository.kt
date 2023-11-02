@@ -23,6 +23,10 @@ class PostRepository private constructor(context: Context) {
 
     suspend fun getPost(id: UUID): Post = database.postDao().getPost(id)
 
+    suspend fun addPost(post: Post){
+        database.postDao().addPost(post)
+    }
+
     companion object {
         private var INSTANCE: PostRepository? = null
 

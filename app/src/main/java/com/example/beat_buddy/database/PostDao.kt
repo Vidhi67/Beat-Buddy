@@ -1,6 +1,7 @@
 package com.example.beat_buddy.database
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.beat_buddy.ui.post.Post
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +14,7 @@ interface PostDao {
 
     @Query("SELECT * FROM post WHERE id=(:id)")
     suspend fun getPost(id: UUID): Post
+
+    @Insert
+    suspend fun addPost(post: Post)
 }
