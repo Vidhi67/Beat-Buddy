@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.room.Room
 import com.example.beat_buddy.database.PostDatabase
 import com.example.beat_buddy.ui.post.Post
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 private const val DATABASE_NAME = "post-database"
-class PostRepository private constructor(context: Context) {
+class PostRepository private constructor(context: Context,private val coroutineScope: CoroutineScope = GlobalScope
+) {
 
     private val database: PostDatabase = Room
         .databaseBuilder(
@@ -26,7 +30,11 @@ class PostRepository private constructor(context: Context) {
     suspend fun addPost(post: Post){
         database.postDao().addPost(post)
     }
-
+    fun updatePost(post: Post) {
+        coroutineScope.launch {
+            database.postDao().updatePost(post)
+        }
+    }
     companion object {
         private var INSTANCE: PostRepository? = null
 
