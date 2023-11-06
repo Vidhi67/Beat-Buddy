@@ -17,7 +17,11 @@
         android:id="@+id/postDetailFragment"
         android:name="com.example.beat_buddy.ui.post.PostDetailFragment"
         android:label="PostDetailFragment"
-        tools:layout="@layout/fragment_post_detail" />
+        tools:layout="@layout/fragment_post_detail" >
+        <argument
+            android:name="postId"
+            app:argType="java.util.UUID" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
