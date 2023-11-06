@@ -58,14 +58,11 @@ class PostFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 postListViewModel.posts.collect { posts ->
                     binding.postsRecyclerView.adapter = PostsListAdapter(posts) { postId ->
-                        Log.d(TAG, "navigating to the fragment")
                         findNavController().navigate(
                             PostFragmentDirections.showPostDetail(postId)
-
                         )
                     }
                 }
-                Log.d(TAG, "navigated to the fragment")
             }
         }
     }

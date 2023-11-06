@@ -51,6 +51,14 @@ class PostDetailFragment : Fragment() {
             postTitle.doOnTextChanged { text, _, _, _ ->
                 postDetailViewModel.updatePost { oldPost ->
                     oldPost.copy(title = text.toString())
+                    oldPost.copy(location = ".2 miles")
+                }
+            }
+        }
+        binding.apply {
+            postDescription.doOnTextChanged { text, _, _, _ ->
+                postDetailViewModel.updatePost { oldPost ->
+                    oldPost.copy(description = text.toString())
                 }
             }
         }
@@ -73,6 +81,11 @@ class PostDetailFragment : Fragment() {
         binding.apply {
             if (postTitle.text.toString() != post.title) {
                 postTitle.setText(post.title)
+            }
+        }
+        binding.apply {
+            if (postDescription.text.toString() != post.description) {
+                postDescription.setText(post.description)
             }
         }
     }
