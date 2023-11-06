@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 import android.util.Log
+import android.widget.TextView
 import com.example.beat_buddy.databinding.FragmentPostBinding
 
 private const val TAG = "PostFragment"
@@ -47,7 +48,6 @@ class PostFragment : Fragment() {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
 
         binding.postsRecyclerView.layoutManager = LinearLayoutManager(context)
-
         return binding.root
     }
 
