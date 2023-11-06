@@ -24,7 +24,6 @@ class PostRepository private constructor(
             PostDatabase::class.java,
             DATABASE_NAME
         )
-        .createFromAsset(DATABASE_NAME)
         .build()
 
     fun getPosts(): Flow<List<Post>> = database.postDao().getPosts()
