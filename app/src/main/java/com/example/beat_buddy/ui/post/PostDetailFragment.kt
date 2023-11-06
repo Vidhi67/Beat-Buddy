@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.example.beat_buddy.R.*
 import kotlinx.coroutines.launch
 import com.example.beat_buddy.databinding.FragmentPostDetailBinding
 
@@ -51,7 +50,6 @@ class PostDetailFragment : Fragment() {
             postTitle.doOnTextChanged { text, _, _, _ ->
                 postDetailViewModel.updatePost { oldPost ->
                     oldPost.copy(title = text.toString())
-                    oldPost.copy(location = ".2 miles")
                 }
             }
         }

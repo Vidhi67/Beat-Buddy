@@ -19,8 +19,6 @@ import com.example.beat_buddy.R
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
-import android.util.Log
-import android.widget.TextView
 import com.example.beat_buddy.databinding.FragmentPostBinding
 
 private const val TAG = "PostFragment"
@@ -94,7 +92,7 @@ class PostFragment : Fragment() {
                 title = "",
                 date = Date(),
                 description = "",
-                location = ""
+                location = ".2 miles away"
             )
             postListViewModel.addPost(newPost)
             findNavController().navigate(
