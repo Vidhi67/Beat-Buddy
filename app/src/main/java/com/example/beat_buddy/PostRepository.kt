@@ -3,7 +3,6 @@ package com.example.beat_buddy
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.example.beat_buddy.database.PostDatabase
 import com.example.beat_buddy.ui.post.Post
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
