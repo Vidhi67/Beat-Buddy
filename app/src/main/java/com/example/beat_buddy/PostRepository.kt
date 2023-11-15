@@ -3,6 +3,7 @@ package com.example.beat_buddy
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import com.example.beat_buddy.api.AccessTokenResponse
 import com.example.beat_buddy.api.GalleryItem
 import com.example.beat_buddy.api.SongInterceptor
 import com.example.beat_buddy.api.SpotifyAPI
@@ -20,6 +21,10 @@ import java.util.UUID
 
 private const val TAG = "PostRepository"
 private const val DATABASE_NAME = "post-database"
+private const val CLIENT_ID = "102f0609f0044a0bbdbecfdf15b5026c"
+private const val CLIENT_SECRET = "ab4600c4afee4545aec86074f3eea5e7"
+private const val REDIRECT_URI = "https://github.com/eliorians/Beat-Buddy"
+
 class PostRepository private constructor(
     context: Context,
     private val coroutineScope: CoroutineScope = GlobalScope
@@ -77,7 +82,14 @@ class PostRepository private constructor(
             .client(okHttpClient)
             .build()
 
-        spotifyApi = retrofit.create()
+        spotifyApi = retrofit.create(SpotifyAPI::class.java)
+    }
+    suspend fun exchangeCodeForToken(code: String) {
+        val response = spotifyApi.getAccessToken("client_credentials",
+            "application/x-www-form-urlencoded",
+            CLIENT_ID,
+            CLIENT_SECRET)
+        val accessToken = response.accessToken
     }
 
     suspend fun fetchSongs(): List<GalleryItem> =
