@@ -72,7 +72,7 @@ class PostRepository private constructor(
             .build()
 
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://api.flickr.com/")
+            .baseUrl("https://api.spotify.com/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
