@@ -80,10 +80,10 @@ class PostRepository private constructor(
         spotifyApi = retrofit.create()
     }
 
-    suspend fun fetchPhotos(): List<GalleryItem> =
+    suspend fun fetchSongs(): List<GalleryItem> =
         spotifyApi.fetchSongs().tracks.galleryItems
 
-    suspend fun searchPhotos(query: String): List<GalleryItem> =
+    suspend fun searchSongs(query: String): List<GalleryItem> =
         spotifyApi.searchSongs(query).tracks.galleryItems
 
 }
