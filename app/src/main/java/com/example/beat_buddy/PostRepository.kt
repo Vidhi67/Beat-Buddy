@@ -3,6 +3,7 @@ package com.example.beat_buddy
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import com.example.beat_buddy.database.PostDatabase
 import com.example.beat_buddy.ui.post.Post
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
@@ -32,11 +33,13 @@ class PostRepository private constructor(
     suspend fun addPost(post: Post){
         database.postDao().addPost(post)
     }
+
     fun updatePost(post: Post) {
         coroutineScope.launch {
             database.postDao().updatePost(post)
         }
     }
+
     companion object {
         private var INSTANCE: PostRepository? = null
 

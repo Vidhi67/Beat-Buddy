@@ -26,8 +26,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField ("String", "SPOTIFY_ID", "\"SPOTIFY_ID\"")
-            buildConfigField ("String", "SPOTIFY_SECRET", "\"SPOTIFY_SECRET\"")
         }
     }
     compileOptions {
