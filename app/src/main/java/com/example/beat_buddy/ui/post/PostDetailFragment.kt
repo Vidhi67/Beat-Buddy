@@ -11,8 +11,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import kotlinx.coroutines.launch
 import com.example.beat_buddy.databinding.FragmentPostDetailBinding
+import kotlinx.coroutines.launch
 
 class PostDetailFragment : Fragment() {
 

@@ -18,6 +18,7 @@ class SongInterceptor(): Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
+
         val originalRequest: Request = chain.request()
 
         val newRequest: Request = originalRequest.newBuilder()

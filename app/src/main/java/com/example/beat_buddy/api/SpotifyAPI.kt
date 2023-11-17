@@ -3,12 +3,14 @@ package com.example.beat_buddy.api
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SpotifyAPI {
     @FormUrlEncoded
     @POST("token")
+    @Header()
     suspend fun getAccessToken(
         @Field("grant_type") grantType: String,
         @Field("content_type") contentType: String = "application/x-www-form-urlencoded",
