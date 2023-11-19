@@ -10,10 +10,11 @@ import retrofit2.http.Query
 interface SpotifyAPI {
     @FormUrlEncoded
     @POST("token")
-    @Header()
+    @Headers(
+        "grant_type: client_credentials",
+        "Content-Type: application/x-www-form-urlencoded"
+    )
     suspend fun getAccessToken(
-        @Field("grant_type") grantType: String,
-        @Field("content_type") contentType: String = "application/x-www-form-urlencoded",
         @Field("client_id") clientId: String,
         @Field("client_secret") clientSecret: String
     ): AccessTokenResponse

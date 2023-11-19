@@ -8,4 +8,6 @@
     <string name="post_title_label">Title</string>
     <string name="post_details_label">Details</string>
     <string name="new_post">New Post</string>
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>
