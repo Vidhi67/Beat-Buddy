@@ -4,11 +4,14 @@ import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import com.example.beat_buddy.api.AccessTokenResponse
+import com.example.beat_buddy.api.AuthManager
+import com.example.beat_buddy.api.AuthorizationData
 import com.example.beat_buddy.api.GalleryItem
 import com.example.beat_buddy.api.SongInterceptor
 import com.example.beat_buddy.api.SpotifyAPI
 import com.example.beat_buddy.database.PostDatabase
 import com.example.beat_buddy.ui.post.Post
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +32,21 @@ class PostRepository private constructor(
     context: Context,
     private val coroutineScope: CoroutineScope = GlobalScope
 ) {
+    private val spotifyApi: SpotifyAPI
+
+    init {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(SongInterceptor())
+            .build()
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://api.spotify.com/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        spotifyApi = retrofit.create(SpotifyAPI::class.java)
+    }
 
     private val database: PostDatabase = Room
         .databaseBuilder(
@@ -68,32 +86,11 @@ class PostRepository private constructor(
                 ?: throw IllegalStateException("PostRepository must be initialized")
         }
     }
-
-    private val spotifyApi: SpotifyAPI
-
-    init {
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(SongInterceptor())
-            .build()
-
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://api.spotify.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-
-        spotifyApi = retrofit.create(SpotifyAPI::class.java)
-    }
-    suspend fun exchangeCodeForToken(code: String) {
-        val response = spotifyApi.getAccessToken("client_credentials",
-            "application/x-www-form-urlencoded",
-            CLIENT_ID,
-            CLIENT_SECRET)
-        val accessToken = response.accessToken
+    suspend fun getAccessToken(): String {
+        val reponse = spotifyApi.getAccessToken(AuthorizationData())
+        return reponse.accessToken
     }
 
-    suspend fun fetchSongs(): List<GalleryItem> =
-        spotifyApi.fetchSongs().tracks.galleryItems
 
     suspend fun searchSongs(query: String): List<GalleryItem> =
         spotifyApi.searchSongs(query).tracks.galleryItems
