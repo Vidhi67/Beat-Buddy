@@ -16,7 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.beat_buddy.PostRepository
 import com.example.beat_buddy.R
@@ -24,6 +23,7 @@ import com.example.beat_buddy.api.AuthManager
 import com.example.beat_buddy.api.GalleryItem
 import com.example.beat_buddy.databinding.FragmentPostDetailBinding
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 private const val TAG = "PostGalleryFragment"
 private val postRepository = PostRepository.get()
@@ -138,12 +138,17 @@ class PostDetailFragment : Fragment() {
                     updateSongSearchResults(song)
                 }
 
+            } catch (e: HttpException) {
+                val errorMessage = e.response()?.errorBody()?.string() ?: "Unknown error"
+                Log.e(TAG, "HTTP 400 Bad Request: $errorMessage")
+                Log.e(TAG, "Failed URL: ${e.response()?.raw()?.request?.url}")
+                Log.e(TAG, "Request: ${e.response()?.raw()?.request?.body}")
             } catch (e: Exception) {
                 Log.e(TAG, "Error searching Spotify API: ${e.message}")
-                // Handle error (e.g., show an error message to the user)
             }
         }
     }
+
     private fun updateSongSearchResults(song: GalleryItem) {
         galleryAdapter?.addSong(song)
     }
