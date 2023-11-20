@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.UUID
@@ -30,8 +31,12 @@ class PostRepository private constructor(
     private val spotifyApi: SpotifyAPI
 
     init {
+        val logging = HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(SongInterceptor())
+            .addInterceptor(logging)
             .build()
 
         val retrofit: Retrofit = Retrofit.Builder()
@@ -82,7 +87,7 @@ class PostRepository private constructor(
         }
     }
     suspend fun getAccessToken(): String {
-        val response = spotifyApi.getAccessToken(mapOf("grant_type" to "client_credentials"), "https://accounts.spotify.com/api/token")
+        val response = spotifyApi.getAccessToken("client_credentials", "https://accounts.spotify.com/api/token")
         return response.accessToken
     }
 

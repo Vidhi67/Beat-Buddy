@@ -21,10 +21,14 @@ class SongInterceptor(): Interceptor {
 
         val originalRequest: Request = chain.request()
 
-        val newRequest: Request = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $authToken")
-            .build()
+        if (!originalRequest.url.toString().contains("accounts.spotify.com")) {
+            val newRequest: Request = originalRequest.newBuilder()
+                .header("Authorization", "Bearer $authToken")
+                .build()
 
-        return chain.proceed(newRequest)
+            return chain.proceed(newRequest)
+        }
+
+        return chain.proceed(originalRequest)
     }
 }
