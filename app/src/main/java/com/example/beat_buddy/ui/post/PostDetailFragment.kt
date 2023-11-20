@@ -99,13 +99,27 @@ class PostDetailFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                postDetailViewModel.post.collect { post ->
-                    post?.let { updateUi(it) }
-                    binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
-                    galleryAdapter = SongListAdapter(mutableListOf())
-                    binding.songRecyclerView.adapter = galleryAdapter
-                    context?.let { AuthManager.saveAuthTokenToPreferences(it, postRepository.getAccessToken()) }
-                    Log.d(TAG, "Access Token: ${postRepository.getAccessToken()}")
+                try {
+                    Log.d(TAG, "PostDetailFragment - Fetching post details...")
+                    postDetailViewModel.post.collect { post ->
+                        Log.d(TAG, "PostDetailFragment - Post details received: $post")
+                        post?.let { updateUi(it) }
+                        binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
+                        galleryAdapter = SongListAdapter(mutableListOf())
+                        binding.songRecyclerView.adapter = galleryAdapter
+                        context?.let { AuthManager.saveAuthTokenToPreferences(it, postRepository.getAccessToken()) }
+                        Log.d(TAG, "PostDetailFragment - Access Token: ${postRepository.getAccessToken()}")
+                    }
+                } catch (e: HttpException) {
+                    val errorMessage = e.response()?.errorBody()?.string() ?: "Unknown error"
+                    val code = e.code()
+                    val url = e.response()?.raw()?.request?.url.toString()
+                    val requestHeaders = e.response()?.raw()?.request?.headers.toString()
+                    Log.e(TAG, "HTTP $code Error: $errorMessage")
+                    Log.e(TAG, "Failed URL: $url")
+                    Log.e(TAG, "Request Headers: $requestHeaders")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error collecting post details: ${e.message}")
                 }
             }
         }
