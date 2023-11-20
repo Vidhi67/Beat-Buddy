@@ -105,6 +105,7 @@ class PostDetailFragment : Fragment() {
                     galleryAdapter = SongListAdapter(mutableListOf())
                     binding.songRecyclerView.adapter = galleryAdapter
                     context?.let { AuthManager.saveAuthTokenToPreferences(it, postRepository.getAccessToken()) }
+                    Log.d(TAG, "Access Token: ${postRepository.getAccessToken()}")
                 }
             }
         }

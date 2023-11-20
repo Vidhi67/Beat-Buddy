@@ -3,15 +3,11 @@ package com.example.beat_buddy
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.example.beat_buddy.api.AccessTokenResponse
-import com.example.beat_buddy.api.AuthManager
-import com.example.beat_buddy.api.AuthorizationData
 import com.example.beat_buddy.api.GalleryItem
 import com.example.beat_buddy.api.SongInterceptor
 import com.example.beat_buddy.api.SpotifyAPI
 import com.example.beat_buddy.database.PostDatabase
 import com.example.beat_buddy.ui.post.Post
-import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +15,6 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import java.util.UUID
 
 private const val TAG = "PostRepository"
@@ -87,8 +82,8 @@ class PostRepository private constructor(
         }
     }
     suspend fun getAccessToken(): String {
-        val reponse = spotifyApi.getAccessToken(AuthorizationData())
-        return reponse.accessToken
+        val response = spotifyApi.getAccessToken(mapOf("grant_type" to "client_credentials"), "https://accounts.spotify.com/api/token")
+        return response.accessToken
     }
 
 
