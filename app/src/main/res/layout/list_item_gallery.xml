@@ -18,16 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/song_artist"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Song Artist"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song_title" />
-    <TextView
         android:id="@+id/song_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -36,6 +26,6 @@
         android:layout_marginEnd="8dp"
         android:text="Song Artist"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/song_artist" />
+        app:layout_constraintTop_toBottomOf="@+id/song_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
