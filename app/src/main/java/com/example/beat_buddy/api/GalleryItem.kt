@@ -5,6 +5,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GalleryItem (
     val name: String,
-    val id: String,
-    @Json(name = "url_s") val url: String
+    val id: String
 )

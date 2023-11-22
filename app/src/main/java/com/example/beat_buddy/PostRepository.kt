@@ -92,7 +92,10 @@ class PostRepository private constructor(
     }
 
 
-    suspend fun searchSongs(query: String): List<GalleryItem> =
-        spotifyApi.searchSongs(query).tracks.galleryItems
+    suspend fun searchSongs(query: String): List<GalleryItem> {
+        Log.d(TAG, spotifyApi.searchSongs(query).tracks.galleryItems.toString())
+        return spotifyApi.searchSongs(query).tracks.galleryItems
+    }
+
 
 }
