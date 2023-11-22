@@ -148,6 +148,7 @@ class PostDetailFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val searchResults = postRepository.searchSongs(query)
+                galleryAdapter?.clearSongs()
                 for (song in searchResults) {
                     updateSongSearchResults(song)
                 }

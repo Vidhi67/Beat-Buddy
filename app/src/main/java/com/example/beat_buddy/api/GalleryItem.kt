@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GalleryItem (
     val name: String,
-    val id: String
+    val id: String,
 )

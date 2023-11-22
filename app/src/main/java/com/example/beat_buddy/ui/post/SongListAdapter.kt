@@ -12,7 +12,7 @@ class SongHolder(
 
     fun bind(song: GalleryItem) {
         binding.songTitle.text = song.name
-        binding.songArtist.text = song.id
+        binding.songId.text = song.id
     }
 }
 class SongListAdapter(
@@ -34,5 +34,9 @@ class SongListAdapter(
     fun addSong(songItem: GalleryItem) {
         songs.add(songItem)
         notifyItemInserted(songs.size - 1)
+    }
+    fun clearSongs() {
+        songs.clear()
+        notifyDataSetChanged()
     }
 }
