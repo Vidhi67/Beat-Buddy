@@ -27,7 +27,10 @@ interface SpotifyAPI {
     suspend fun fetchSongs(): SpotifyResponse
 
     @GET("v1/search")
-    suspend fun searchSongs(@Query("text") query: String): SpotifyResponse
+    suspend fun searchSongs(
+        @Query("q") query: String,
+        @Query("type") type: String = "track",
+    ): SpotifyResponse
 
 
 }

@@ -8,17 +8,17 @@ import okhttp3.Response
 
 // Spotify requires bearer token with Oauth 2.0 so we must pass it in
 // we need to store the auth token in the users preferences and it can read within the interceptor
-class SongInterceptor(): Interceptor {
+class SongInterceptor(private val context: Context): Interceptor {
 
     private var authToken: String? = null
 
-    fun getAuthTokenFromPreferences(context: Context) {
+    fun getAuthTokenFromPreferences() {
         val sharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         authToken = sharedPreferences.getString("authToken", null)
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-
+        getAuthTokenFromPreferences()
         val originalRequest: Request = chain.request()
 
         if (!originalRequest.url.toString().contains("accounts.spotify.com")) {

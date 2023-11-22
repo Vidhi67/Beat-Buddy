@@ -35,7 +35,7 @@ class PostRepository private constructor(
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(SongInterceptor())
+            .addInterceptor(SongInterceptor(context))
             .addInterceptor(logging)
             .build()
 

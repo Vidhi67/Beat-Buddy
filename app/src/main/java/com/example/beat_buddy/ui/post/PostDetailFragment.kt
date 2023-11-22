@@ -58,7 +58,7 @@ class PostDetailFragment : Fragment() {
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "QueryTextSubmit: $query")
-//                photoGalleryViewModel.setQuery(query ?: "")
+                searchSpotifyApi(query.toString())
                 return true
             }
 
@@ -147,7 +147,7 @@ class PostDetailFragment : Fragment() {
     private fun searchSpotifyApi(query: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val searchResults = postRepository.searchSongs(query) // Replace with your actual Spotify API call
+                val searchResults = postRepository.searchSongs(query)
                 for (song in searchResults) {
                     updateSongSearchResults(song)
                 }
