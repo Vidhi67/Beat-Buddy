@@ -1,5 +1,6 @@
 package com.example.beat_buddy.ui.post
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -67,6 +68,12 @@ class PostDetailFragment : Fragment() {
                 return false
             }
         })
+
+        val shareItem: MenuItem = menu.findItem(R.id.menu_item_share)
+        shareItem.setOnMenuItemClickListener {
+            sharePostContent() // Call a function to share post content
+            true
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -178,6 +185,22 @@ class PostDetailFragment : Fragment() {
             if (postDescription.text.toString() != post.description) {
                 postDescription.setText(post.description)
             }
+        }
+    }
+
+    private fun sharePostContent() {
+        val postContent: String = "This is the content of the post."
+
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, postContent)
+
+        val chooserTitle = "Share Post Content"
+        val chooser = Intent.createChooser(sharingIntent, chooserTitle)
+        if (sharingIntent.resolveActivity(requireContext().packageManager) != null) {
+            startActivity(chooser)
+        } else {
+            // Handle case where no apps support sharing
         }
     }
 }
