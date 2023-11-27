@@ -31,6 +31,8 @@ private val postRepository = PostRepository.get()
 class PostDetailFragment : Fragment() {
 
     private var _binding: FragmentPostDetailBinding? = null
+    private var currentPost: Post? = null
+
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
@@ -75,6 +77,7 @@ class PostDetailFragment : Fragment() {
             true
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -114,8 +117,16 @@ class PostDetailFragment : Fragment() {
                         binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
                         galleryAdapter = SongListAdapter(mutableListOf())
                         binding.songRecyclerView.adapter = galleryAdapter
-                        context?.let { AuthManager.saveAuthTokenToPreferences(it, postRepository.getAccessToken()) }
-                        Log.d(TAG, "PostDetailFragment - Access Token: ${postRepository.getAccessToken()}")
+                        context?.let {
+                            AuthManager.saveAuthTokenToPreferences(
+                                it,
+                                postRepository.getAccessToken()
+                            )
+                        }
+                        Log.d(
+                            TAG,
+                            "PostDetailFragment - Access Token: ${postRepository.getAccessToken()}"
+                        )
                     }
                 } catch (e: HttpException) {
                     val errorMessage = e.response()?.errorBody()?.string() ?: "Unknown error"
@@ -151,6 +162,7 @@ class PostDetailFragment : Fragment() {
         _binding = null
         searchView = null
     }
+
     private fun searchSpotifyApi(query: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
@@ -176,6 +188,7 @@ class PostDetailFragment : Fragment() {
     }
 
     private fun updateUi(post: Post) {
+        currentPost = post
         binding.apply {
             if (postTitle.text.toString() != post.title) {
                 postTitle.setText(post.title)
@@ -189,18 +202,20 @@ class PostDetailFragment : Fragment() {
     }
 
     private fun sharePostContent() {
-        val postContent: String = "This is the content of the post."
+        currentPost?.let { post ->
+            val postContent: String = "I am currently listening to '${post.title}' by '${post.description}'."
 
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "text/plain"
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, postContent)
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, postContent)
 
-        val chooserTitle = "Share Post Content"
-        val chooser = Intent.createChooser(sharingIntent, chooserTitle)
-        if (sharingIntent.resolveActivity(requireContext().packageManager) != null) {
-            startActivity(chooser)
-        } else {
-            // Handle case where no apps support sharing
+            val chooserTitle = "Here's a song from Beat Buddy!"
+            val chooser = Intent.createChooser(sharingIntent, chooserTitle)
+            if (sharingIntent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(chooser)
+            } else {
+                // Handle case where no apps support sharing
+            }
         }
     }
 }
