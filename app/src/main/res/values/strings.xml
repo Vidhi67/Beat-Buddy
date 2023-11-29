@@ -3,10 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_post">Post</string>
     <string name="title_account">Account</string>
-    <string name="post_title_hint">Enter a title for the post.</string>
-    <string name="post_details_hint">Enter details for the post.</string>
+    <string name="post_title_hint">Title of your song.</string>
+    <string name="post_details_hint">Artist of your song.</string>
     <string name="post_title_label">Title</string>
-    <string name="post_details_label">Details</string>
+    <string name="post_details_label">Artist</string>
     <string name="new_post">New Post</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
