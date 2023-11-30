@@ -115,7 +115,10 @@ class PostDetailFragment : Fragment() {
                         Log.d(TAG, "PostDetailFragment - Post details received: $post")
                         post?.let { updateUi(it) }
                         binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
-                        galleryAdapter = SongListAdapter(mutableListOf())
+                        galleryAdapter = SongListAdapter(mutableListOf()) { song ->
+                            binding.postTitle.setText(song.name)
+                            binding.postDescription.setText(song.artists[0].name)
+                        }
                         binding.songRecyclerView.adapter = galleryAdapter
                         context?.let {
                             AuthManager.saveAuthTokenToPreferences(
