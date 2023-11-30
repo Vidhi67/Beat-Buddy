@@ -114,12 +114,7 @@ class PostDetailFragment : Fragment() {
                     postDetailViewModel.post.collect { post ->
                         Log.d(TAG, "PostDetailFragment - Post details received: $post")
                         post?.let { updateUi(it) }
-                        binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
-                        galleryAdapter = SongListAdapter(mutableListOf()) { song ->
-                            binding.postTitle.setText(song.name)
-                            binding.postDescription.setText(song.artists[0].name)
-                        }
-                        binding.songRecyclerView.adapter = galleryAdapter
+
                         context?.let {
                             AuthManager.saveAuthTokenToPreferences(
                                 it,
@@ -144,6 +139,13 @@ class PostDetailFragment : Fragment() {
                 }
             }
         }
+        binding.songRecyclerView.layoutManager = LinearLayoutManager(context)
+        galleryAdapter = SongListAdapter(mutableListOf()) { song ->
+            binding.postTitle.setText(song.name)
+            binding.postDescription.setText(song.artists[0].name)
+        }
+
+        binding.songRecyclerView.adapter = galleryAdapter
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "QueryTextSubmit: $query")
