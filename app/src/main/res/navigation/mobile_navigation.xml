@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/postFragment"
         android:name="com.example.beat_buddy.ui.post.PostFragment"
-        android:label="PostFragment"
+        android:label="Public posts"
         tools:layout="@layout/fragment_posts_list">
         <action
             android:id="@+id/show_post_detail"
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/postDetailFragment"
         android:name="com.example.beat_buddy.ui.post.PostDetailFragment"
-        android:label="PostDetailFragment"
+        android:label="Create new post"
         tools:layout="@layout/fragment_post_detail" >
         <argument
             android:name="postId"

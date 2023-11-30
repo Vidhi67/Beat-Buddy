@@ -14,6 +14,7 @@ class PostHolder(
         binding.postsTitle.text = post.title
         binding.postsTimestamp.text = post.date.toString()
         binding.postsDescription.text = post.description
+        binding.postsLocation.text = post.location
 
         binding.root.setOnClickListener {
             onPostClicked(post.id)

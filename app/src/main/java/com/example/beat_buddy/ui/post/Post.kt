@@ -11,5 +11,5 @@ data class Post (
     val title: String,
     val date: Date,
     val description: String,
-    val location: String
+    val location: String = ".2 miles away"
 )
