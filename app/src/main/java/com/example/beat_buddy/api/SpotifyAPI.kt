@@ -29,7 +29,7 @@ interface SpotifyAPI {
     @GET("v1/search")
     suspend fun searchSongs(
         @Query("q") query: String,
-        @Query("type") type: String = "track",
+        @Query("type") type: List<String> = listOf("track", "artist"),
     ): SpotifyResponse
 
 

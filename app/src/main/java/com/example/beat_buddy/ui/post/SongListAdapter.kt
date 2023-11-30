@@ -12,7 +12,7 @@ class SongHolder(
 
     fun bind(song: GalleryItem) {
         binding.songTitle.text = song.name
-        binding.songId.text = song.id
+        binding.songId.text = song.artists[0].name
     }
 }
 class SongListAdapter(
